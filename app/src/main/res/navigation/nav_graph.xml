@@ -3,11 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/courseFragment">
+    app:startDestination="@id/navigation_home"
+    >
 
     <fragment
-        android:id="@+id/courseFragment"
-        android:name="com.example.easylearn.ui.discover.CourseFragment"
-        android:label="fragment_course"
-        tools:layout="@layout/fragment_course" />
+        android:id="@+id/navigation_discover"
+        android:name="com.example.easylearn.ui.discover.DiscoverFragment"
+        android:label="fragment_discover"
+        tools:layout="@layout/fragment_discover" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.easylearn.ui.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.easylearn.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+
+    </fragment>
 </navigation>
+
+<!--    app:startDestination="@id/discover_fragment"-->

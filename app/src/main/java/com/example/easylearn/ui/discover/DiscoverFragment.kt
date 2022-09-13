@@ -7,20 +7,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
-import com.example.easylearn.databinding.FragmentCourseBinding
+import com.example.easylearn.databinding.FragmentDiscoverBinding
 import com.example.easylearn.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CourseFragment: Fragment(R.layout.fragment_course){
+class DiscoverFragment: Fragment(R.layout.fragment_discover){
 
-    private val viewModel: CourseViewModel by viewModels()
+    private val viewModel: DiscoverViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentCourseBinding.bind(view)
+        val binding = FragmentDiscoverBinding.bind(view)
         val courseAdapter = CourseAdapter()
 
         binding.apply {

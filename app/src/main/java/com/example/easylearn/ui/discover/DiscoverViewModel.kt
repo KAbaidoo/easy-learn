@@ -7,7 +7,7 @@ import com.example.easylearn.data.CourseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
-class CourseViewModel @Inject constructor(
+class DiscoverViewModel @Inject constructor(
     repository: CourseRepository
 ) : ViewModel() {
 
