@@ -33,7 +33,7 @@ class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(Course
                     .load(course.banner)
                     .into(imageViewLogo)
 
-                textViewName.text = "course.title"
+                textViewName.text = course.title
                 textViewOffered.text = "Offered by ${course.offered}"
                 textViewCpd.text = "${course.cpd.toString()} cpd"
             }
