@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.easylearn.data.Course
 import com.example.easylearn.databinding.ItemCourseBinding
 
-class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(CourseComparator()) {
+class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(CourseViewHolder.CourseComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val binding =
@@ -33,18 +33,19 @@ class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(Course
                     .load(course.banner)
                     .into(imageViewLogo)
 
-                textViewName.text = course.title
-                textViewOffered.text = course.offered
-                textViewCpd.text = course.cpd.toString()
+                textViewName.text = "course.title"
+                textViewOffered.text = "Offered by ${course.offered}"
+                textViewCpd.text = "${course.cpd.toString()} cpd"
             }
         }
-    }
 
-    class CourseComparator : DiffUtil.ItemCallback<Course>() {
-        override fun areItemsTheSame(oldItem: Course, newItem: Course) =
-            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Course, newItem: Course) =
-            oldItem == newItem
+        class CourseComparator : DiffUtil.ItemCallback<Course>() {
+            override fun areItemsTheSame(oldItem: Course, newItem: Course) =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Course, newItem: Course) =
+                oldItem == newItem
+        }
     }
 }
