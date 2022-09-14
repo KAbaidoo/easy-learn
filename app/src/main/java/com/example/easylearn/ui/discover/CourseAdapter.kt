@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.easylearn.data.Course
 import com.example.easylearn.databinding.ItemCourseBinding
 
-class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(CourseViewHolder.CourseComparator()) {
+class CourseAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Course, CourseAdapter.CourseViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val binding =
@@ -24,8 +25,19 @@ class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(Course
         }
     }
 
-    class CourseViewHolder(private val binding: ItemCourseBinding) :
+  inner  class CourseViewHolder(private val binding: ItemCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+      init {
+          binding.apply {
+              root.setOnClickListener{
+                  val position = adapterPosition
+                  if (position != RecyclerView.NO_POSITION){
+                      val course = getItem(position)
+                      listener.onItemClick(course)
+                  }
+              }
+          }
+      }
 
         fun bind(course: Course) {
             binding.apply {
@@ -39,13 +51,18 @@ class CourseAdapter : ListAdapter<Course, CourseAdapter.CourseViewHolder>(Course
             }
         }
 
-
-        class CourseComparator : DiffUtil.ItemCallback<Course>() {
-            override fun areItemsTheSame(oldItem: Course, newItem: Course) =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: Course, newItem: Course) =
-                oldItem == newItem
-        }
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(coure: Course)
+    }
+
+    class DiffCallback : DiffUtil.ItemCallback<Course>() {
+        override fun areItemsTheSame(oldItem: Course, newItem: Course) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Course, newItem: Course) =
+            oldItem == newItem
+    }
+
 }

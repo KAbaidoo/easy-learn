@@ -12,6 +12,9 @@
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" >
 
+        <action
+            android:id="@+id/action_navigation_discover_to_detailFragment"
+            app:destination="@id/detailDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -27,6 +30,15 @@
         tools:layout="@layout/fragment_home" >
 
     </fragment>
+    <dialog
+        android:id="@+id/detailDialogFragment"
+        android:name="com.example.easylearn.ui.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail_dialog" >
+        <argument
+            android:name="course"
+            app:argType="com.example.easylearn.data.Course" />
+    </dialog>
 </navigation>
 
 <!--    app:startDestination="@id/discover_fragment"-->
