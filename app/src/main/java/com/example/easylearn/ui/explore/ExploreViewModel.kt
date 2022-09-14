@@ -1,4 +1,4 @@
-package com.example.easylearn.ui.discover
+package com.example.easylearn.ui.explore
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
@@ -7,7 +7,7 @@ import com.example.easylearn.data.CourseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
-class DiscoverViewModel @Inject constructor(
+class ExploreViewModel @Inject constructor(
     repository: CourseRepository
 ) : ViewModel() {
 

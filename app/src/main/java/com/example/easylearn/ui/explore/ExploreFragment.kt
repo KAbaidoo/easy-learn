@@ -1,4 +1,4 @@
-package com.example.easylearn.ui.discover
+package com.example.easylearn.ui.explore
 
 import android.os.Bundle
 import android.view.View
@@ -12,9 +12,9 @@ import com.example.easylearn.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment: Fragment(R.layout.fragment_discover){
+class ExploreFragment: Fragment(R.layout.fragment_discover){
 
-    private val viewModel: DiscoverViewModel by viewModels()
+    private val viewModel: ExploreViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

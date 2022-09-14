@@ -1,4 +1,4 @@
-package com.example.easylearn.ui.discover
+package com.example.easylearn.ui.explore
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
