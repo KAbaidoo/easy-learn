@@ -1,10 +1,13 @@
 package com.example.easylearn.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "course_table")
+@Parcelize
 data class Course(
     @PrimaryKey val id: String,
     val title: String,
@@ -16,4 +19,4 @@ data class Course(
     val modules: Int,
     val cpd: Int,
     val duration: Int
-)
+):Parcelable
