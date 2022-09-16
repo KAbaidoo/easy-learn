@@ -54,7 +54,7 @@ class CourseAdapter(private val listener: OnItemClickListener) :
     }
 
     interface OnItemClickListener {
-        fun onItemClick(coure: Course)
+        fun onItemClick(course: Course)
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Course>() {

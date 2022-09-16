@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EasyLearn</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="detail_fragment_text">Detail Screen</string>
 </resources>
