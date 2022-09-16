@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
@@ -49,16 +50,9 @@ class ExploreFragment : Fragment(R.layout.fragment_discover), CourseAdapter.OnIt
             viewModel.courseEvent.collect { event ->
                 when (event) {
                     is ExploreViewModel.CourseEvent.NavigateToCourseDetailScreen -> {
-                        val intent = Intent(requireContext(),DetailActivity::class.java)
-                        startActivity(intent)
 
-//                        val action =
-//                           HomeScreenFragmentDirections.actionHomeScreenFragmentToDetailFragment(event.course)
-//
-//                        val navHost =
-//                            childFragmentManager.findFragmentById(R.id.nav_host_fragment_screen_home) as NavHostFragment
-//                        val navController = navHost.findNavController()
-//                        navController.navigate(action)
+                        val action = ExploreFragmentDirections.actionNavigationExploreToDetailActivity(event.course)
+                        findNavController().navigate(action)
 
                     }
                 }

@@ -10,6 +10,9 @@
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" >
 
+        <action
+            android:id="@+id/action_navigation_explore_to_detailActivity"
+            app:destination="@id/detail_activity" />
     </fragment>
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -25,5 +28,14 @@
         tools:layout="@layout/fragment_home" >
 
     </fragment>
+    <activity
+        android:id="@+id/detail_activity"
+        android:name="com.example.easylearn.ui.DetailActivity"
+        android:label="activity_detail"
+        tools:layout="@layout/activity_detail" >
+        <argument
+            android:name="course"
+            app:argType="com.example.easylearn.data.Course" />
+    </activity>
 
 </navigation>
