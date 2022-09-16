@@ -1,6 +1,5 @@
 package com.example.easylearn.ui.explore
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
 import com.example.easylearn.data.Course
 import com.example.easylearn.databinding.FragmentDiscoverBinding
-import com.example.easylearn.ui.DetailActivity
 
 import com.example.easylearn.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,9 +48,12 @@ class ExploreFragment : Fragment(R.layout.fragment_discover), CourseAdapter.OnIt
             viewModel.courseEvent.collect { event ->
                 when (event) {
                     is ExploreViewModel.CourseEvent.NavigateToCourseDetailScreen -> {
-
-                        val action = ExploreFragmentDirections.actionNavigationExploreToDetailActivity(event.course)
+                        val action =
+                            ExploreFragmentDirections.actionNavigationExploreToCourseDetailFragment(
+                                event.course
+                            )
                         findNavController().navigate(action)
+
 
                     }
                 }

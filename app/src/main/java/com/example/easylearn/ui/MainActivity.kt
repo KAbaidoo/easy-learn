@@ -2,9 +2,11 @@ package com.example.easylearn.ui
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.easylearn.R
 import com.example.easylearn.databinding.ActivityMainBinding
@@ -25,8 +27,18 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation: NavigationBarView = binding.bottomNavigation
 
-        navController = findNavController(R.id.nav_host_fragment_container)
+        val navController = findNavController(R.id.nav_host_fragment_container)
               bottomNavigation.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.course_detail_fragment) {
+//                toolbar.visibility = View.GONE
+                bottomNavigation.visibility = View.GONE
+            } else {
+//                toolbar.visibility = View.VISIBLE
+                bottomNavigation.visibility = View.VISIBLE
+            }
+        }
     }
 
 //    override fun onSupportNavigateUp(): Boolean {

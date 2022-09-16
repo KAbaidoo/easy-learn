@@ -1,4 +1,4 @@
-package com.example.easylearn.ui.home
+package com.example.easylearn.ui.detail
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import com.example.easylearn.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(R.layout.fragment_home) {
+class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
