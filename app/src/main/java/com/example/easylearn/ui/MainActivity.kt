@@ -28,15 +28,13 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation: NavigationBarView = binding.bottomNavigation
 
         val navController = findNavController(R.id.nav_host_fragment_container)
-              bottomNavigation.setupWithNavController(navController)
+        bottomNavigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.course_detail_fragment) {
-//                toolbar.visibility = View.GONE
-                bottomNavigation.visibility = View.GONE
-            } else {
-//                toolbar.visibility = View.VISIBLE
+            if (destination.id == R.id.navigation_home || destination.id == R.id.navigation_explore || destination.id == R.id.navigation_dashboard) {
                 bottomNavigation.visibility = View.VISIBLE
+            } else {
+                bottomNavigation.visibility = View.GONE
             }
         }
     }

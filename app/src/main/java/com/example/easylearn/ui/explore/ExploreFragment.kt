@@ -11,13 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
 import com.example.easylearn.data.Course
-import com.example.easylearn.databinding.FragmentDiscoverBinding
+import com.example.easylearn.databinding.FragmentExploreBinding
 
 import com.example.easylearn.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ExploreFragment : Fragment(R.layout.fragment_discover), CourseAdapter.OnItemClickListener {
+class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnItemClickListener {
 
     private val viewModel: ExploreViewModel by viewModels()
 
@@ -25,7 +25,7 @@ class ExploreFragment : Fragment(R.layout.fragment_discover), CourseAdapter.OnIt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentDiscoverBinding.bind(view)
+        val binding = FragmentExploreBinding.bind(view)
         val courseAdapter = CourseAdapter(this)
 
         binding.apply {

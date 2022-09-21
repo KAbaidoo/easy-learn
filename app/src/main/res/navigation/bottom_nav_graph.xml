@@ -9,7 +9,7 @@
         android:id="@+id/navigation_explore"
         android:name="com.example.easylearn.ui.explore.ExploreFragment"
         android:label="fragment_discover"
-        tools:layout="@layout/fragment_discover" >
+        tools:layout="@layout/fragment_explore" >
         <action
             android:id="@+id/action_navigation_explore_to_course_detail_fragment"
             app:destination="@id/course_detail_fragment" />
