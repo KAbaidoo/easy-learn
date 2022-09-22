@@ -23,6 +23,7 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
             ratingBarDetail.rating = viewModel.courseRating as Float
             textViewLessons.text= "${viewModel.courseModules} Lessons  •  "
             textViewHours.text = "${viewModel.courseDuration} Hours"
+            textViewCpd.text = "  •  ${viewModel.courseCPD} points"
 
         }
     }

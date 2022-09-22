@@ -57,6 +57,8 @@ class CourseDetailViewModel @AssistedInject constructor(
             field = value
             state.set("courseModules", value)
         }
+
+
     var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
         get() {
             return field?.div(60) as Int

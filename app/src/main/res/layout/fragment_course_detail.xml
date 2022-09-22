@@ -19,6 +19,7 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/covid_19" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,8 +43,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_view_title"
-                    tools:text="Offered by "
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    tools:text="Offered by " />
 
                 <LinearLayout
                     android:id="@+id/linear_layout_lessons_hours"
@@ -60,11 +61,20 @@
                         android:text="11 Lessons  •  "
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:textColor="@color/teal_700" />
+
                     <TextView
                         android:id="@+id/text_view_hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="6 Hours"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="@color/teal_700" />
+
+                    <TextView
+                        android:id="@+id/text_view_cpd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  •  3 points"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:textColor="@color/teal_700" />
 
