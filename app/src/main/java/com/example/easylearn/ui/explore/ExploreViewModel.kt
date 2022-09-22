@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class ExploreViewModel @Inject constructor(
     repository: CourseRepository
 ) : ViewModel() {
-
     val courses = repository.getCourses().asLiveData()
 
     private val courseEventChannel = Channel<CourseEvent>()
