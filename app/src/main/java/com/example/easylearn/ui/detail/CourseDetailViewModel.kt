@@ -1,14 +1,16 @@
 package com.example.easylearn.ui.detail
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.easylearn.data.Course
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 
 
 
-class CourseDetailViewModel @AssistedInject constructor(
+
+
+class CourseDetailViewModel  @ViewModelInject constructor(
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
     val course = state.get<Course>("course")

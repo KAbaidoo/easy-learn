@@ -5,41 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f3f2ee"
-    android:padding="8dp"
     tools:context=".ui.explore.ExploreFragment">
-
-    <TextView
-        android:id="@+id/text_view_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="What do you want to learn today?"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_below="@+id/text_view_title"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/white"
-        style="@style/Widget.AppCompat.SearchView"
-        android:layout_marginBottom="32dp"
-        android:padding="4dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="search courses" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_view"
         android:clipToPadding="false"
         android:padding="4dp"
         tools:listitem="@layout/item_course" />
@@ -62,6 +34,5 @@
         android:visibility="invisible"
         tools:text="Error message"
         tools:visibility="visible" />
-
-
 </RelativeLayout>
+

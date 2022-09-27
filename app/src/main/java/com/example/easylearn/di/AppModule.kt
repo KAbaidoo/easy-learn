@@ -30,9 +30,14 @@ object AppModule {
         retrofit.create(CourseApi::class.java)
 
 
+
+
     @Provides
     @Singleton
     fun provideDatabase(app: Application) : CourseDatabase =
         Room.databaseBuilder(app, CourseDatabase::class.java, "course_database")
             .build()
+
+    @Provides
+    fun provideCourseDao(db:CourseDatabase)= db.courseDao()
 }

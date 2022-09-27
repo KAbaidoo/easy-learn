@@ -17,4 +17,8 @@ interface CourseDao {
 
     @Query("DELETE FROM course_table")
     suspend fun deleteAllCourses()
+
+    @Query ("SELECT * FROM course_table WHERE title LIKE '%'||:searchQuery||'%' ORDER BY  title")
+    fun getCourses(searchQuery:String) : Flow<List<Course>>
+
 }
