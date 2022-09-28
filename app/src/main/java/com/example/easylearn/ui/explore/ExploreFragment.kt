@@ -32,6 +32,20 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
         val binding = FragmentExploreBinding.bind(view)
         val courseAdapter = CourseAdapter(this)
 
+//        binding.myToolbar.inflateMenu(R.menu.top_app_bar)
+        binding.myToolbar.apply {
+            val searchItem = menu.findItem(R.id.action_search)
+            val searchView = searchItem.actionView as SearchView
+            val pendingQuery = viewModel.searchQuery.value
+            if (pendingQuery != null && pendingQuery.isNotEmpty()) {
+                searchItem.expandActionView()
+                searchView.setQuery(pendingQuery, false)
+            }
+            searchView.onQueryTextChanged {
+                viewModel.searchQuery.value = it
+            }
+        }
+
         binding.apply {
             recyclerView.apply {
                 adapter = courseAdapter
@@ -42,9 +56,9 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
             viewModel.courses.observe(viewLifecycleOwner) {
                 courseAdapter.submitList(it)
 
-//                progressBar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
-//                textViewError.isVisible = result is Resource.Error && result.data.isNullOrEmpty()
-//                textViewError.text = result.error?.localizedMessage
+//                progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
+//                textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()
+//                textViewError.text = it.error?.localizedMessage
             }
         }
 
@@ -66,21 +80,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_app_bar, menu)
 
-        val searchItem = menu.findItem(R.id.action_search)
-        searchView = searchItem.actionView as SearchView
-
-        val pendingQuery = viewModel.searchQuery.value
-        if (pendingQuery != null && pendingQuery.isNotEmpty()) {
-            searchItem.expandActionView()
-            searchView.setQuery(pendingQuery, false)
-        }
-        searchView.onQueryTextChanged {
-            viewModel.searchQuery.value = it
-        }
-    }
 
 
     override fun onItemClick(course: Course) {
