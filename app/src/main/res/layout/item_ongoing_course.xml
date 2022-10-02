@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="1dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="12dp"
+    app:shapeAppearance="?attr/shapeAppearanceMediumComponent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:shapeAppearance="?attr/shapeAppearanceMediumComponent">
+
+            <ImageView
+                android:id="@+id/image_view_logo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/covid_19" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!--             Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trends in laboratory investigation of enteric fever"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout_lessons_hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_offered"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_lessons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11 Lessons  •  "
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="@color/teal_700" />
+
+                <TextView
+                    android:id="@+id/text_view_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 Hours"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="@color/teal_700" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="@color/teal_200"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:text="60 %"/>
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    android:progress="@integer/material_motion_duration_long_1"
+                    android:progressTint="@color/teal_700" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/text_view_name"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_marginStart="8dp"-->
+    <!--            android:layout_marginEnd="8dp"-->
+    <!--            android:layout_toStartOf="@id/image_view_logo"-->
+    <!--            android:ellipsize="end"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:maxLines="2"-->
+    <!--            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"-->
+    <!--            android:textColor="@color/dark"-->
+    <!--            tools:text="Trends in laboratory investigation of enteric fever" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/text_view_offered"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/text_view_name"-->
+    <!--            android:layout_marginStart="8dp"-->
+    <!--            android:layout_marginTop="4dp"-->
+    <!--            android:layout_marginEnd="8dp"-->
+    <!--            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"-->
+    <!--            android:textColor="?android:textColorSecondary"-->
+    <!--            android:textSize="12sp"-->
+    <!--            tools:text="Offfered by GAMLS" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/text_view_cpd"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/text_view_offered"-->
+    <!--            android:layout_marginStart="8dp"-->
+    <!--            android:layout_marginTop="4dp"-->
+    <!--            android:layout_marginEnd="4dp"-->
+    <!--            android:layout_marginBottom="4dp"-->
+    <!--            tools:text="2 cpd" />-->
+
+</com.google.android.material.card.MaterialCardView>

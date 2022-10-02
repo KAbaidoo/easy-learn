@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="#E9EBEC"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.home.HomeFragment">
-
+    tools:context=".ui.home.HomeFragment"
+    android:padding="8dp">
 
     <TextView
         android:layout_width="wrap_content"

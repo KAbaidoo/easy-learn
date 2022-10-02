@@ -35,7 +35,7 @@
         tools:layout="@layout/fragment_course_detail" >
         <argument
             android:name="course"
-            app:argType="com.example.easylearn.data.Course" />
+            app:argType="com.example.easylearn.data.pojo.Course" />
     </fragment>
 
 

@@ -3,41 +3,54 @@ package com.example.easylearn.ui.explore
 import androidx.hilt.Assisted
 import androidx.lifecycle.*
 
-import com.example.easylearn.data.Course
-import com.example.easylearn.data.CourseDao
+import com.example.easylearn.data.pojo.Course
 import com.example.easylearn.data.CourseRepository
 
 
 import androidx.hilt.lifecycle.ViewModelInject
+import com.bumptech.glide.Glide.init
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.*
 
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
 class ExploreViewModel @ViewModelInject constructor(
-    private val courseDao: CourseDao,
+
+    private val repository: CourseRepository,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("searchQuery", "")
-//    val courses = courseDao.getCourses().asLiveData()
-
     private val courseEventChannel = Channel<CourseEvent>()
     val courseEvent = courseEventChannel.receiveAsFlow()
 
+//    private val _courses = MutableLiveData<List<Course>>()
+//    val courses:LiveData<List<Course>>
+//    get() = _courses
 
-    private val courseFlow = searchQuery.asFlow().flatMapLatest {
-        courseDao.getCourses(it)
+
+//    init {
+//        loadCourses()
+//    }
+//
+//    fun loadCourses(){
+//        viewModelScope.launch {
+//            _courses.value = repository.getAllCourses()
+//        }
+//    }
+
+    val courseFlow = searchQuery.asFlow().flatMapLatest {
+        repository.searchCourses(it)
     }
     val courses = courseFlow.asLiveData()
 
-    fun onCourseSelected(course: Course)= viewModelScope.launch {
+
+    fun onCourseSelected(course: Course) = viewModelScope.launch {
         courseEventChannel.send(CourseEvent.NavigateToCourseDetailScreen(course))
     }
 
-    sealed class CourseEvent{
-        data class NavigateToCourseDetailScreen(val course: Course): CourseEvent()
+    sealed class CourseEvent {
+        data class NavigateToCourseDetailScreen(val course: Course) : CourseEvent()
     }
 }

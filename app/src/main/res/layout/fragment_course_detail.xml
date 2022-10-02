@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -20,105 +21,113 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/covid_19" />
 
-            <RelativeLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image_view_banner"
-                android:padding="20dp">
+                app:cardCornerRadius="16dp"
+                android:translationY="-20dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                android:layout_below="@+id/image_view_banner">
 
-                <TextView
-                    android:id="@+id/text_view_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="@color/dark"
-                    android:textSize="24sp"
-                    tools:text="Course title" />
-
-                <TextView
-                    android:id="@+id/text_view_offered"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_view_title"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                    tools:text="Offered by " />
-
-                <LinearLayout
-                    android:id="@+id/linear_layout_lessons_hours"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_view_offered"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/image_view_banner"
+                    android:padding="20dp">
 
                     <TextView
-                        android:id="@+id/text_view_lessons"
+                        android:id="@+id/text_view_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="11 Lessons  •  "
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:textColor="@color/teal_700" />
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:textColor="@color/dark"
+                        android:textSize="24sp"
+                        tools:text="Course title" />
 
                     <TextView
-                        android:id="@+id/text_view_hours"
+                        android:id="@+id/text_view_offered"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6 Hours"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:textColor="@color/teal_700" />
+                        android:layout_below="@+id/text_view_title"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        tools:text="Offered by " />
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_lessons_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_view_offered"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_view_lessons"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="11 Lessons  •  "
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                            android:textColor="@color/teal_700" />
+
+                        <TextView
+                            android:id="@+id/text_view_hours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6 Hours"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                            android:textColor="@color/teal_700" />
+
+                        <TextView
+                            android:id="@+id/text_view_cpd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  •  3 points"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                            android:textColor="@color/teal_700" />
+
+                    </LinearLayout>
+
+                    <RatingBar
+                        android:id="@+id/rating_bar_detail"
+                        style="@android:style/Widget.Material.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linear_layout_lessons_hours"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:progressTint="#F9A825" />
 
                     <TextView
-                        android:id="@+id/text_view_cpd"
+                        android:id="@+id/text_view_description_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="  •  3 points"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:textColor="@color/teal_700" />
+                        android:layout_below="@+id/rating_bar_detail"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Description"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/text_view_description_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_view_description_title"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book" />
 
-                <RatingBar
-                    android:id="@+id/rating_bar_detail"
-                    style="@android:style/Widget.Material.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear_layout_lessons_hours"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:progressTint="#F9A825" />
-
-                <TextView
-                    android:id="@+id/text_view_description_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rating_bar_detail"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Description"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <TextView
-                    android:id="@+id/text_view_description_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_view_description_title"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book" />
-
-                <TextView
-                    android:id="@+id/text_view_lesson_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_view_description_body"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Lessons"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-            </RelativeLayout>
-
+                    <TextView
+                        android:id="@+id/text_view_lesson_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_view_description_body"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Lessons"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
 
@@ -128,7 +137,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_margin="24dp"
-        android:text="enroll"
+        android:text="start learning"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -2,8 +2,8 @@ package com.example.easylearn.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.easylearn.api.CourseApi
-import com.example.easylearn.data.CourseDatabase
+import com.example.easylearn.data.api.CourseApi
+import com.example.easylearn.data.db.CourseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

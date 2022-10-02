@@ -1,11 +1,8 @@
 package com.example.easylearn.ui.explore
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
-import com.example.easylearn.data.Course
+import com.example.easylearn.data.pojo.Course
 import com.example.easylearn.databinding.FragmentExploreBinding
 
-import com.example.easylearn.util.Resource
 import com.example.easylearn.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 

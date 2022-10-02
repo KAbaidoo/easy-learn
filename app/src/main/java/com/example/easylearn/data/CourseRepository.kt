@@ -1,9 +1,13 @@
 package com.example.easylearn.data
 
-import androidx.room.withTransaction
-import com.example.easylearn.api.CourseApi
-import com.example.easylearn.util.networkBoundResource
-import kotlinx.coroutines.delay
+import com.example.easylearn.data.api.CourseApi
+import com.example.easylearn.data.db.CourseDatabase
+import com.example.easylearn.data.pojo.Course
+import kotlinx.coroutines.flow.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 import javax.inject.Inject
 
 class CourseRepository @Inject constructor(
@@ -12,19 +16,16 @@ class CourseRepository @Inject constructor(
 ) {
     private val courseDao = db.courseDao()
 
-    fun getCourses() = networkBoundResource(
-        query = {
-            courseDao.getAllCourses()
-        },
-        fetch = {
-            delay(2000)
-            api.getCourses()
-        },
-        saveFetchResult = { courses ->
-            db.withTransaction {
-                courseDao.deleteAllCourses()
-                courseDao.insertCourses(courses)
-            }
-        }
-    )
+//        suspend fun searchCourses(query: String) = api.searchCourses(query)
+
+
+//    fun getAllLessons(courseId) = flow {
+//        emit(api.getAllLessons())
+//    }
+
+    suspend fun searchCourses(query: String) = flow {
+        emit(api.searchCourses(query))
+    }
+
+
 }

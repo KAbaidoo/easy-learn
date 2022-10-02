@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.easylearn.data.Course
+import com.example.easylearn.data.pojo.Course
 import com.example.easylearn.databinding.ItemCourseBinding
 
 class CourseAdapter(private val listener: OnItemClickListener) :
@@ -45,7 +45,7 @@ class CourseAdapter(private val listener: OnItemClickListener) :
                     .load(course.banner)
                     .into(imageViewLogo)
 
-                textViewName.text = course.title
+                textViewTitle.text = course.title
                 textViewOffered.text = "Offered by ${course.offered}"
                 textViewCpd.text = "${course.cpd.toString()} cpd"
             }
