@@ -49,8 +49,8 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                 setHasFixedSize(true)
             }
 
-            viewModel.courses.observe(viewLifecycleOwner) {
-                courseAdapter.submitList(it)
+            viewModel.courseApiResponse.observe(viewLifecycleOwner) { it ->
+                courseAdapter.submitList(it.body())
 
 //                progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
 //                textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()

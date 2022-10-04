@@ -16,9 +16,9 @@ interface CourseApi {
     }
 
     @GET("/api/courses/search")
-    suspend fun searchCourses(@Query("query") query: String=""): List<Course>
+    suspend fun searchCourses(@Query("query") query: String=""): Response<List<Course>>
 
     @GET("/api/courses/lessons")
-    suspend fun getAllLessons(@Query("id") id: String): List<Lesson>
+    suspend fun getAllLessons(@Query("id") id: String): Response<List<Course>>
 
 }

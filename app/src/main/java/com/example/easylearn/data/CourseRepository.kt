@@ -3,6 +3,7 @@ package com.example.easylearn.data
 import com.example.easylearn.data.api.CourseApi
 import com.example.easylearn.data.db.CourseDatabase
 import com.example.easylearn.data.pojo.Course
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,11 +22,12 @@ class CourseRepository @Inject constructor(
 
 //    fun getAllLessons(courseId) = flow {
 //        emit(api.getAllLessons())
-//    }
+//    }.flowOn(Dispatchers.IO)
 
     suspend fun searchCourses(query: String) = flow {
         emit(api.searchCourses(query))
-    }
+    }.flowOn(Dispatchers.IO)
+
 
 
 }

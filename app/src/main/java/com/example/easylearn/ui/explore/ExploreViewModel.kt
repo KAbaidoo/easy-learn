@@ -43,7 +43,8 @@ class ExploreViewModel @ViewModelInject constructor(
     val courseFlow = searchQuery.asFlow().flatMapLatest {
         repository.searchCourses(it)
     }
-    val courses = courseFlow.asLiveData()
+    val courseApiResponse = courseFlow.asLiveData()
+
 
 
     fun onCourseSelected(course: Course) = viewModelScope.launch {
