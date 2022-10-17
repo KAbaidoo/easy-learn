@@ -3,6 +3,7 @@ package com.example.easylearn.ui.explore
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
 import com.example.easylearn.data.pojo.Course
 import com.example.easylearn.databinding.FragmentExploreBinding
+import com.example.easylearn.util.ApiResult
 
 import com.example.easylearn.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnItemClickListener {
 
     private val viewModel: ExploreViewModel by viewModels()
-    private lateinit var searchView: SearchView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +29,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
         val binding = FragmentExploreBinding.bind(view)
         val courseAdapter = CourseAdapter(this)
 
-//        binding.myToolbar.inflateMenu(R.menu.top_app_bar)
+
         binding.myToolbar.apply {
             val searchItem = menu.findItem(R.id.action_search)
             val searchView = searchItem.actionView as SearchView
@@ -49,12 +50,36 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                 setHasFixedSize(true)
             }
 
-            viewModel.courseApiResponse.observe(viewLifecycleOwner) { it ->
-                courseAdapter.submitList(it.body())
+            viewModel.courseApiResponse.observe(viewLifecycleOwner) { result ->
+                courseAdapter.submitList(result.data)
 
-//                progressBar.isVisible = it is Resource.Loading && it.data.isNullOrEmpty()
-//                textViewError.isVisible = it is Resource.Error && it.data.isNullOrEmpty()
-//                textViewError.text = it.error?.localizedMessage
+                when (result){
+                    is ApiResult.Success -> {
+                        progressBar.isVisible = false
+                        courseAdapter.submitList(result.data)
+                    }
+                    is ApiResult.Failure,null -> {
+                        progressBar.isVisible = false
+                        textViewError.isVisible = true
+                        textViewError.text = result?.errorMsg
+                    }
+                    is ApiResult.Loading -> {
+                        progressBar.isVisible = true
+                    }
+                    is ApiResult.Exception -> {
+                        progressBar.isVisible = false
+                        textViewError.isVisible = true
+                        textViewError.text = result.error?.localizedMessage
+                    }
+                }
+
+//                progressBar.isVisible = result is ApiResult.Loading && result.data.isNullOrEmpty()
+//                //handle Exception
+//                textViewError.isVisible = result is ApiResult.Exception && result.data.isNullOrEmpty()
+//                textViewError.text = result.error?.localizedMessage
+//                //handle Api failure
+//                textViewError.isVisible = result is ApiResult.Failure && result.data.isNullOrEmpty()
+//                textViewError.text = result.errorMsg
             }
         }
 
@@ -68,16 +93,11 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                             )
                         findNavController().navigate(action)
 
-
                     }
                 }
             }
         }
-
     }
-
-
-
 
     override fun onItemClick(course: Course) {
         viewModel.onCourseSelected(course)

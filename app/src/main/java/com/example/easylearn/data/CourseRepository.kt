@@ -2,12 +2,9 @@ package com.example.easylearn.data
 
 import com.example.easylearn.data.api.CourseApi
 import com.example.easylearn.data.db.CourseDatabase
-import com.example.easylearn.data.pojo.Course
+import com.example.easylearn.util.ApiResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 import javax.inject.Inject
 
@@ -24,10 +21,31 @@ class CourseRepository @Inject constructor(
 //        emit(api.getAllLessons())
 //    }.flowOn(Dispatchers.IO)
 
-    suspend fun searchCourses(query: String) = flow {
-        emit(api.searchCourses(query))
-    }.flowOn(Dispatchers.IO)
 
+    //    =======================================
+//    Api requests
+    suspend fun searchCourses(query: String) = flow {
+
+        emit(ApiResult.Loading())
+
+        //Loading state
+
+        try {
+            val response = api.searchCourses(query)
+            if (response.isSuccessful) {
+                emit(ApiResult.Success(response.body()))
+            } else {
+                val errorMsg = response.errorBody()?.string()
+                response.errorBody()?.close()
+                errorMsg?.let {
+                    emit(ApiResult.Failure(data = null, errorMsg = it))
+                }
+            }
+        } catch (throwable: Throwable) {
+            emit(ApiResult.Exception(throwable, null))
+        }
+
+    }.flowOn(Dispatchers.IO)
 
 
 }

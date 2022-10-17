@@ -15,7 +15,9 @@
             android:id="@+id/image_view_logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
+
             android:layout_alignParentEnd="true"
+            android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
