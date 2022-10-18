@@ -3,12 +3,11 @@ package com.example.easylearn.ui.explore
 import androidx.hilt.Assisted
 import androidx.lifecycle.*
 
-import com.example.easylearn.data.pojo.Course
-import com.example.easylearn.data.CourseRepository
+import com.example.easylearn.data.api.Course
+import com.example.easylearn.data.Repository
 
 
 import androidx.hilt.lifecycle.ViewModelInject
-import com.bumptech.glide.Glide.init
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 
@@ -17,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class ExploreViewModel @ViewModelInject constructor(
 
-    private val repository: CourseRepository,
+    private val repository: Repository,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
@@ -25,20 +24,6 @@ class ExploreViewModel @ViewModelInject constructor(
     private val courseEventChannel = Channel<CourseEvent>()
     val courseEvent = courseEventChannel.receiveAsFlow()
 
-//    private val _courses = MutableLiveData<List<Course>>()
-//    val courses:LiveData<List<Course>>
-//    get() = _courses
-
-
-//    init {
-//        loadCourses()
-//    }
-//
-//    fun loadCourses(){
-//        viewModelScope.launch {
-//            _courses.value = repository.getAllCourses()
-//        }
-//    }
 
     val courseFlow = searchQuery.asFlow().flatMapLatest {
         repository.searchCourses(it)

@@ -126,6 +126,14 @@
                         android:layout_marginBottom="8dp"
                         android:text="Lessons"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lessons_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/text_view_lesson_title"
+                        android:padding="4dp"
+                        tools:listitem="@layout/item_lesson_detail" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>

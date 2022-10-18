@@ -1,9 +1,5 @@
 package com.example.easylearn.data.api
 
-import com.example.easylearn.data.pojo.Course
-import com.example.easylearn.data.pojo.Lesson
-import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,7 +14,7 @@ interface CourseApi {
     @GET("/api/courses/search")
     suspend fun searchCourses(@Query("query") query: String=""): Response<List<Course>>
 
-//    @GET("/api/courses/lessons")
-//    suspend fun getAllLessons(@Query("id") id: String): Response<List<Course>>
+    @GET("/api/lessons/for")
+    suspend fun getLessons(@Query("courseId") id: String): Response<List<Lesson>>
 
 }

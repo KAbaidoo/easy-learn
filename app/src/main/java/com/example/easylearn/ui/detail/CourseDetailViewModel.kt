@@ -2,18 +2,42 @@ package com.example.easylearn.ui.detail
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import com.example.easylearn.data.pojo.Course
+import androidx.lifecycle.*
+import com.example.easylearn.data.Repository
+import com.example.easylearn.data.api.Course
+import com.example.easylearn.data.api.Lesson
+import kotlinx.coroutines.launch
 
 
-
-
-
-class CourseDetailViewModel  @ViewModelInject constructor(
-    @Assisted private val state: SavedStateHandle
+class CourseDetailViewModel @ViewModelInject constructor(
+    @Assisted private val state: SavedStateHandle,
+    private val repository: Repository
 ) : ViewModel() {
     val course = state.get<Course>("course")
+    var courseId = state.get<String>("courseId") ?: course?.id
+        set(value) {
+            field = value
+            state.set("courseId", value)
+            loadLessons()
+        }
+
+    private val _lessons = MutableLiveData<List<Lesson>>()
+    val lessons: LiveData<List<Lesson>>
+        get() = _lessons
+
+    init {
+        loadLessons()
+    }
+
+    private fun loadLessons() {
+        viewModelScope.launch {
+            courseId?.let {
+                _lessons.value = repository.getLessons(it).body()
+            }
+        }
+    }
+
+
 
     var courseTitle = state.get<String>("courseTitle") ?: course?.title
         set(value) {
@@ -69,7 +93,6 @@ class CourseDetailViewModel  @ViewModelInject constructor(
             field = value
             state.set("courseDuration", value)
         }
-
 
 
 }

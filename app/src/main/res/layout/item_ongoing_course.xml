@@ -50,7 +50,7 @@
                 android:id="@+id/linear_layout_lessons_hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text_view_offered"
+                android:layout_below="@+id/text_view_lesson"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 

@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
-import com.example.easylearn.data.pojo.Course
+import com.example.easylearn.data.api.Course
 import com.example.easylearn.databinding.FragmentExploreBinding
 import com.example.easylearn.util.ApiResult
 
@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnItemClickListener {
 
     private val viewModel: ExploreViewModel by viewModels()
+    val courseAdapter = CourseAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +52,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
             }
 
             viewModel.courseApiResponse.observe(viewLifecycleOwner) { result ->
-                courseAdapter.submitList(result.data)
+//                courseAdapter.submitList(result.data)
 
                 when (result){
                     is ApiResult.Success -> {
@@ -73,13 +74,6 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                     }
                 }
 
-//                progressBar.isVisible = result is ApiResult.Loading && result.data.isNullOrEmpty()
-//                //handle Exception
-//                textViewError.isVisible = result is ApiResult.Exception && result.data.isNullOrEmpty()
-//                textViewError.text = result.error?.localizedMessage
-//                //handle Api failure
-//                textViewError.isVisible = result is ApiResult.Failure && result.data.isNullOrEmpty()
-//                textViewError.text = result.errorMsg
             }
         }
 
