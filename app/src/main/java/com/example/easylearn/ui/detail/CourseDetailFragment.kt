@@ -14,14 +14,15 @@ import com.example.easylearn.ui.explore.CourseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CourseDetailFragment :Fragment(R.layout.fragment_course_detail),LessonAdapter.OnItemClickListener{
+class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
     private val viewModel: CourseDetailViewModel by viewModels()
-    private val lessonAdapter = LessonAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+         val lessonAdapter = LessonAdapter()
         val binding = FragmentCourseDetailBinding.bind(view)
+
         binding.apply {
             Glide.with(view)
                 .load(viewModel.courseBanner)
@@ -37,20 +38,21 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail),LessonAdap
             lessonsRecyclerView.apply {
                 adapter = lessonAdapter
                 layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
+                setHasFixedSize(false)
             }
 
             viewModel.lessons.observe(viewLifecycleOwner){
-                Log.d(TAG,it.toString())
+
                 lessonAdapter.submitList(it)
+
             }
 
         }
     }
 
-    override fun onItemClick(lesson: Lesson) {
-        TODO("Not yet implemented")
-    }
+
+
+
     companion object{
         private const val TAG = "CourseDetailFragment"
     }

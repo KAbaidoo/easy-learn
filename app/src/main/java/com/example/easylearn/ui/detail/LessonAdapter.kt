@@ -12,7 +12,7 @@ import com.example.easylearn.databinding.ItemCourseBinding
 import com.example.easylearn.databinding.ItemLessonDetailBinding
 import com.example.easylearn.ui.explore.CourseAdapter
 
-class LessonAdapter(private val listener: OnItemClickListener) :
+class LessonAdapter() :
     ListAdapter<Lesson, LessonAdapter.LessonViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonAdapter.LessonViewHolder {
@@ -30,17 +30,7 @@ class LessonAdapter(private val listener: OnItemClickListener) :
 
   inner  class LessonViewHolder(private val binding: ItemLessonDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-      init {
-          binding.apply {
-              root.setOnClickListener{
-                  val position = adapterPosition
-                  if (position != RecyclerView.NO_POSITION){
-                      val lesson = getItem(position)
-                      listener.onItemClick(lesson)
-                  }
-              }
-          }
-      }
+
 
         fun bind(lesson: Lesson) {
             binding.apply {
@@ -53,9 +43,7 @@ class LessonAdapter(private val listener: OnItemClickListener) :
 
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(lesson: Lesson)
-    }
+
 
     class DiffCallback : DiffUtil.ItemCallback<Lesson>() {
         override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson) =

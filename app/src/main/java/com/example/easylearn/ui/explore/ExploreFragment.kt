@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnItemClickListener {
 
     private val viewModel: ExploreViewModel by viewModels()
-    val courseAdapter = CourseAdapter(this)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

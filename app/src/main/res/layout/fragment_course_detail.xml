@@ -23,11 +23,11 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/image_view_banner"
                 android:translationY="-20dp"
                 app:cardBackgroundColor="?attr/colorSurface"
-                android:layout_below="@+id/image_view_banner">
+                app:cardCornerRadius="16dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -127,13 +127,19 @@
                         android:text="Lessons"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
+
+
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/lessons_recycler_view"
+                        android:layout_below="@id/text_view_lesson_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/text_view_lesson_title"
+                        android:clipToPadding="false"
                         android:padding="4dp"
                         tools:listitem="@layout/item_lesson_detail" />
+
+
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>

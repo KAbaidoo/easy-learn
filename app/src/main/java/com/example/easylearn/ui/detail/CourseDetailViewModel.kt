@@ -14,6 +14,8 @@ class CourseDetailViewModel @ViewModelInject constructor(
     private val repository: Repository
 ) : ViewModel() {
     val course = state.get<Course>("course")
+
+
     var courseId = state.get<String>("courseId") ?: course?.id
         set(value) {
             field = value
@@ -22,9 +24,6 @@ class CourseDetailViewModel @ViewModelInject constructor(
         }
 
     private val _lessons = MutableLiveData<List<Lesson>>()
-    val lessons: LiveData<List<Lesson>>
-        get() = _lessons
-
     init {
         loadLessons()
     }
@@ -36,6 +35,9 @@ class CourseDetailViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    val lessons: LiveData<List<Lesson>>
+        get() = _lessons
 
 
 
@@ -68,27 +70,30 @@ class CourseDetailViewModel @ViewModelInject constructor(
             field = value
             state.set("courseRating", value)
         }
+
     var coursePrice = state.get<Float>("coursePrice") ?: course?.price
         set(value) {
             field = value
             state.set("coursePrice", value)
         }
+
     var courseCPD = state.get<Int>("courseCPD") ?: course?.cpd
         set(value) {
             field = value
             state.set("courseCPD", value)
         }
+
     var courseModules = state.get<Int>("courseModules") ?: course?.modules
         set(value) {
             field = value
             state.set("courseModules", value)
         }
 
-
     var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
         get() {
             return field?.div(60) as Int
         }
+
         set(value) {
             field = value
             state.set("courseDuration", value)
