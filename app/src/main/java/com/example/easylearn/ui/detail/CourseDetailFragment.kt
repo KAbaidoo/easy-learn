@@ -3,6 +3,7 @@ package com.example.easylearn.ui.detail
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,8 @@ import com.example.easylearn.R
 import com.example.easylearn.data.api.Lesson
 import com.example.easylearn.databinding.FragmentCourseDetailBinding
 import com.example.easylearn.ui.explore.CourseAdapter
+import com.example.easylearn.util.ApiResult
+import com.example.easylearn.util.onClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,14 +43,33 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(false)
             }
-
-            viewModel.lessons.observe(viewLifecycleOwner){
-
-                lessonAdapter.submitList(it)
-
+            viewModel.lessons.observe(viewLifecycleOwner){result ->
+                when (result){
+                    is ApiResult.Success -> {
+                        progressBar.isVisible = false
+                        lessonAdapter.submitList(result.data)
+                    }
+                    is ApiResult.Failure,null -> {
+                        progressBar.isVisible = false
+                        textViewError.isVisible = true
+                        textViewError.text = result?.errorMsg
+                    }
+                    is ApiResult.Loading -> {
+                        progressBar.isVisible = true
+                    }
+                    is ApiResult.Exception -> {
+                        progressBar.isVisible = false
+                        textViewError.isVisible = true
+                        textViewError.text = result.error?.localizedMessage
+                    }
+                }
             }
 
+            startButton.onClick {
+//                viewModel.startButtonClicked()
+            }
         }
+
     }
 
 

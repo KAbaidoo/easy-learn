@@ -37,7 +37,7 @@ class LessonAdapter() :
 
                 textViewTitle.text = lesson.title
                 textViewLesson.text = "lesson no. ${lesson.lesson}"
-                textViewDuration.text = "${lesson.duration.div(1000)} mins"
+                textViewDuration.text = "${lesson.duration.div(60000)} mins"
             }
         }
 

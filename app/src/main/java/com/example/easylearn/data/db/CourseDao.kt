@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.db.entities.CourseDb
+import com.example.easylearn.data.db.entities.LessonDb
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,12 +16,15 @@ interface CourseDao {
     fun getAllCourses(): Flow<List<CourseDb>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCourses(courses: List<CourseDb>)
+    suspend fun insertCourse(course: CourseDb)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLessons(lessons: List<LessonDb>)
+
 
     @Query("DELETE FROM course_table")
     suspend fun deleteAllCourses()
 
-    @Query ("SELECT * FROM course_table WHERE title LIKE '%'||:searchQuery||'%' ORDER BY  title")
-    fun getCourses(searchQuery:String) : Flow<List<CourseDb>>
+
 
 }
