@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CourseDao {
 
-    @Query("SELECT * FROM coursedb")
-    suspend fun getAllCourses(): Flow<List<CourseDb>>
+//    @Query("SELECT * FROM course_table")
+//    suspend fun getAllCourses(): List<CourseDb>
 
-    @Query("SELECT * FROM courseDb WHERE id = :courseId")
-    suspend fun getCourseWithLessons(courseId : String): Flow<List<CourseWithLessons>>
+    @Query("SELECT * FROM course_table WHERE id = :courseId")
+    suspend fun getCourseWithLessons(courseId : String): List<CourseWithLessons>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCourse(courseDb: CourseDb)

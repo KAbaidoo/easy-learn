@@ -1,5 +1,6 @@
 package com.example.easylearn.ui.detail
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -101,7 +102,7 @@ class CourseDetailViewModel @ViewModelInject constructor(
         val res = repository.getSavedCourseWithLessons(course.id)
 
 //        send event to channel
-
+        Log.d(TAG, res.toString())
 
 
     }
@@ -161,5 +162,7 @@ class CourseDetailViewModel @ViewModelInject constructor(
 //            field = value
 //            state.set("courseDuration", value)
 //        }
-
+    companion object {
+        private const val TAG = "CourseDetailViewModel"
+    }
 }

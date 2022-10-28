@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.text.DateFormat
 
 
-@Entity
+@Entity(tableName = "course_table")
 @Parcelize
 data class CourseDb(
     @PrimaryKey(autoGenerate = false) val id: String,
