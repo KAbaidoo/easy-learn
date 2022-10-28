@@ -61,24 +61,17 @@ class Repository @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+
+
     //    ==============================================================
 //    Database operations
-    suspend fun saveCourseWithLessons(courseDb: CourseDb, lessonsDb: List<LessonDb>?) {
+    suspend fun saveLesson(lessonDb: LessonDb) =
+        withContext(Dispatchers.IO) { courseDao.insertLesson(lessonDb) }
 
-//        course?.let {
-//            val courseDb = CourseDb(
-//                it.id,
-//                it.title,
-//                it.about,
-//                it.offered,
-//                it.banner,
-//                it.rating,
-//                it.price,
-//                it.cpd
-//            )
-//            courseDao.insertCourse(courseDb)
-//        }
-  }
+    suspend fun saveCourse(courseDb: CourseDb) =
+        withContext(Dispatchers.IO) { courseDao.insertCourse(courseDb) }
 
+    suspend fun getSavedCourseWithLessons(id: String) =
+        withContext(Dispatchers.IO) { courseDao.getCourseWithLessons(id) }
 
 }

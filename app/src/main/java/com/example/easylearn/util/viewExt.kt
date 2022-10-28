@@ -17,7 +17,7 @@ inline fun SearchView.onQueryTextChanged (crossinline listener:(String) -> Unit 
     })
 }
 
-inline fun Button.onClick(crossinline action: () -> Unit){
+inline fun Button.onButtonClicked(crossinline action: () -> Unit){
     this.setOnClickListener( object : View.OnClickListener{
         override fun onClick(v: View?) {
             action()

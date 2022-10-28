@@ -6,8 +6,11 @@ import androidx.lifecycle.*
 import com.example.easylearn.data.Repository
 import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.api.Lesson
+import com.example.easylearn.data.db.entities.CourseDb
+import com.example.easylearn.data.db.entities.LessonDb
 import com.example.easylearn.util.ApiResult
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 
@@ -20,12 +23,20 @@ class CourseDetailViewModel @ViewModelInject constructor(
         set(value) {
             field = value
             state.set("courseId", value)
-            loadLessons()
+
         }
 
     val lessons: LiveData<ApiResult<List<Lesson>>>
         get() = lessonsFlow.asLiveData()
-//    private val _lessons = MutableLiveData<List<Lesson>>()
+
+
+    private val _courseModules = MutableLiveData<Int>()
+    val courseModules: LiveData<Int>
+        get() = _courseModules
+
+    private val _courseDuration = MutableLiveData<Long>()
+    val courseDuration: LiveData<Long>
+        get() = _courseDuration
 
     private var lessonsFlow = flowOf<ApiResult<List<Lesson>>>()
 
@@ -34,17 +45,18 @@ class CourseDetailViewModel @ViewModelInject constructor(
         loadLessons()
     }
 
+
     private fun loadLessons() {
         viewModelScope.launch {
 
             courseId?.let {
                 lessonsFlow = repository.getLessons(it) as Flow<ApiResult<List<Lesson>>>
-                lessonsFlow.collectLatest {
-                   courseModules =  it.data?.asFlow()?.map {
-                        courseDuration = courseDuration?.plus(it.duration)
-                        it
+                lessonsFlow.collectLatest { ApiResult ->
+                    var duration = 0L
+                    _courseModules.value = ApiResult.data?.asFlow()?.map {
+                        duration += it.duration.div(60000)
                     }?.count()
-
+                    _courseDuration.value = duration
                 }
 
 
@@ -53,8 +65,44 @@ class CourseDetailViewModel @ViewModelInject constructor(
     }
 
 
-    fun startButtonClicked(c: Course, l: List<Lesson>) = viewModelScope.launch {
-//        repository.saveCourseWithLessons(course,lessons.value)
+    fun startButtonClicked(course: Course, lessons: List<Lesson>) = viewModelScope.launch {
+
+        course.let {
+            val courseDb = CourseDb(
+                it.id,
+                it.title,
+                it.about,
+                it.offered,
+                it.banner,
+                it.rating,
+                it.price,
+                it.cpd,
+                courseModules.value!!,
+                courseDuration.value!!
+            )
+
+            repository.saveCourse(courseDb)
+        }
+
+        lessons.asFlow().map {
+            LessonDb(
+                it.courseId,
+                it.duration,
+                it.id,
+                it.lesson,
+                it.src,
+                it.title
+            )
+        }.collect { lessonDb ->
+            repository.saveLesson(lessonDb)
+        }
+
+        joinAll()
+        val res = repository.getSavedCourseWithLessons(course.id)
+
+//        send event to channel
+
+
 
     }
 
@@ -101,20 +149,17 @@ class CourseDetailViewModel @ViewModelInject constructor(
             state.set("courseCPD", value)
         }
 
-    var courseModules = state.get<Int>("courseModules") ?: course?.modules
-        set(value) {
-            field = value
-            state.set("courseModules", value)
-        }
-
-    var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
-        get() {
-            return field?.div(60) as Int
-        }
-        set(value) {
-            field = value
-            state.set("courseDuration", value)
-        }
-
+    //    var courseModules = state.get<Int>("courseModules") ?: lessonNum
+//        set(value) {
+//            field = value
+//            state.set("courseModules", value)
+//        }
+//
+//    var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
+//
+//        set(value) {
+//            field = value
+//            state.set("courseDuration", value)
+//        }
 
 }

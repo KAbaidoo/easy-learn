@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Lesson(
     val courseId: String,
-    val duration: Int,
+    val duration: Long,
     val id: String,
     val lesson: Int,
     val src: String,
