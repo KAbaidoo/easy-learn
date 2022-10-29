@@ -17,7 +17,7 @@ interface CourseDao {
 //    suspend fun getAllCourses(): List<CourseDb>
 
     @Query("SELECT * FROM course_table WHERE id = :courseId")
-    suspend fun getCourseWithLessons(courseId : String): List<CourseWithLessons>
+    suspend fun getCourseWithLessons(courseId : String): CourseWithLessons
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCourse(courseDb: CourseDb)

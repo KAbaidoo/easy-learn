@@ -1,10 +1,12 @@
 package com.example.easylearn.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.easylearn.R
@@ -79,9 +81,16 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.courseDetailEvent.collect{ event ->
+                when(event){
+                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> Log.d(TAG, event.courseWithLessons.toString())
+
+                }
+            }
+        }
+
     }
-
-
 
 
     companion object{

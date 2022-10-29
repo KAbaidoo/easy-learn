@@ -65,10 +65,10 @@ class Repository @Inject constructor(
 
     //    ==============================================================
 //    Database operations
-    suspend fun saveLesson(lessonDb: LessonDb) =
+    suspend fun saveLessonDb(lessonDb: LessonDb) =
         withContext(Dispatchers.IO) { courseDao.insertLesson(lessonDb) }
 
-    suspend fun saveCourse(courseDb: CourseDb) =
+    suspend fun saveCourseDb(courseDb: CourseDb) =
         withContext(Dispatchers.IO) { courseDao.insertCourse(courseDb) }
 
     suspend fun getSavedCourseWithLessons(id: String) =

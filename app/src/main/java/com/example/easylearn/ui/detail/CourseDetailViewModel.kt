@@ -1,6 +1,5 @@
 package com.example.easylearn.ui.detail
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -9,7 +8,9 @@ import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.api.Lesson
 import com.example.easylearn.data.db.entities.CourseDb
 import com.example.easylearn.data.db.entities.LessonDb
+import com.example.easylearn.data.db.entities.relations.CourseWithLessons
 import com.example.easylearn.util.ApiResult
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -24,7 +25,6 @@ class CourseDetailViewModel @ViewModelInject constructor(
         set(value) {
             field = value
             state.set("courseId", value)
-
         }
 
     val lessons: LiveData<ApiResult<List<Lesson>>>
@@ -46,6 +46,9 @@ class CourseDetailViewModel @ViewModelInject constructor(
         loadLessons()
     }
 
+    private val courseDetailEventChannel = Channel<DetailEvent>()
+
+    val courseDetailEvent = courseDetailEventChannel.receiveAsFlow()
 
     private fun loadLessons() {
         viewModelScope.launch {
@@ -67,43 +70,15 @@ class CourseDetailViewModel @ViewModelInject constructor(
 
 
     fun startButtonClicked(course: Course, lessons: List<Lesson>) = viewModelScope.launch {
-
-        course.let {
-            val courseDb = CourseDb(
-                it.id,
-                it.title,
-                it.about,
-                it.offered,
-                it.banner,
-                it.rating,
-                it.price,
-                it.cpd,
-                courseModules.value!!,
-                courseDuration.value!!
-            )
-
-            repository.saveCourse(courseDb)
-        }
-
-        lessons.asFlow().map {
-            LessonDb(
-                it.courseId,
-                it.duration,
-                it.id,
-                it.lesson,
-                it.src,
-                it.title
-            )
-        }.collect { lessonDb ->
-            repository.saveLesson(lessonDb)
-        }
-
+        saveCourse(course)
+        saveLessons(lessons)
         joinAll()
-        val res = repository.getSavedCourseWithLessons(course.id)
 
 //        send event to channel
-        Log.d(TAG, res.toString())
+        val savedCourseWithLesson = repository.getSavedCourseWithLessons(course.id)
+        courseDetailEventChannel.send(DetailEvent.NavigateToCourseScreen(savedCourseWithLesson))
 
+//        Log.d(TAG, res.toString())
 
     }
 
@@ -150,19 +125,61 @@ class CourseDetailViewModel @ViewModelInject constructor(
             state.set("courseCPD", value)
         }
 
-    //    var courseModules = state.get<Int>("courseModules") ?: lessonNum
-//        set(value) {
-//            field = value
-//            state.set("courseModules", value)
-//        }
-//
-//    var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
-//
-//        set(value) {
-//            field = value
-//            state.set("courseDuration", value)
-//        }
+ /*       var courseModules = state.get<Int>("courseModules") ?: lessonNum
+        set(value) {
+            field = value
+            state.set("courseModules", value)
+        }
+
+    var courseDuration = state.get<Int>("courseDuration") ?: course?.duration
+
+        set(value) {
+            field = value
+            state.set("courseDuration", value)
+        }
+
+  */
+
+
     companion object {
         private const val TAG = "CourseDetailViewModel"
+    }
+
+    sealed class DetailEvent {
+        data class NavigateToCourseScreen(val courseWithLessons: CourseWithLessons) : DetailEvent()
+    }
+
+    private suspend fun saveCourse(course: Course) {
+        course.let {
+            val courseDb = CourseDb(
+                it.id,
+                it.title,
+                it.about,
+                it.offered,
+                it.banner,
+                it.rating,
+                it.price,
+                it.cpd,
+                courseModules.value!!,
+                courseDuration.value!!
+            )
+
+            repository.saveCourseDb(courseDb)
+        }
+    }
+
+    private suspend fun saveLessons(lessons: List<Lesson>) {
+        lessons.asFlow().map {
+            LessonDb(
+                it.courseId,
+                it.duration,
+                it.id,
+                it.lesson,
+                it.src,
+                it.title
+            )
+        }.collect { lessonDb ->
+            repository.saveLessonDb(lessonDb)
+        }
     }
 }

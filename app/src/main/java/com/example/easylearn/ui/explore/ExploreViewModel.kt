@@ -21,8 +21,8 @@ class ExploreViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("searchQuery", "")
-    private val courseEventChannel = Channel<CourseEvent>()
-    val courseEvent = courseEventChannel.receiveAsFlow()
+    private val exploreEventChannel = Channel<CourseEvent>()
+    val courseEvent = exploreEventChannel.receiveAsFlow()
 
 
     val courseFlow = searchQuery.asFlow().flatMapLatest {
@@ -33,7 +33,7 @@ class ExploreViewModel @ViewModelInject constructor(
 
 
     fun onCourseSelected(course: Course) = viewModelScope.launch {
-        courseEventChannel.send(CourseEvent.NavigateToCourseDetailScreen(course))
+        exploreEventChannel.send(CourseEvent.NavigateToCourseDetailScreen(course))
     }
 
     sealed class CourseEvent {
