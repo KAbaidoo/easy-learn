@@ -19,12 +19,10 @@ class ExploreViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
-
-    val searchQuery = state.getLiveData("searchQuery", "")
     private val exploreEventChannel = Channel<CourseEvent>()
     val courseEvent = exploreEventChannel.receiveAsFlow()
 
-
+    val searchQuery = state.getLiveData("searchQuery", "")
     val courseFlow = searchQuery.asFlow().flatMapLatest {
         repository.searchCourses(it)
     }

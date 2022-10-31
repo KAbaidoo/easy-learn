@@ -84,7 +84,7 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.courseDetailEvent.collect{ event ->
                 when(event){
-                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> Log.d(TAG, event.courseWithLessons.toString())
+                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> Log.d(TAG, event.savedCourseId)
 
                 }
             }

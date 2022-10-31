@@ -1,5 +1,6 @@
 package com.example.easylearn.ui.detail
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -69,16 +70,13 @@ class CourseDetailViewModel @ViewModelInject constructor(
     }
 
 
-    fun startButtonClicked(course: Course, lessons: List<Lesson>) = viewModelScope.launch {
-        saveCourse(course)
-        saveLessons(lessons)
+    fun startButtonClicked(c: Course, l: List<Lesson>) = viewModelScope.launch {
+        saveCourse(c)
+        saveLessons(l)
         joinAll()
-
 //        send event to channel
-        val savedCourseWithLesson = repository.getSavedCourseWithLessons(course.id)
-        courseDetailEventChannel.send(DetailEvent.NavigateToCourseScreen(savedCourseWithLesson))
-
-//        Log.d(TAG, res.toString())
+        courseDetailEventChannel.send(DetailEvent.NavigateToCourseScreen(c.id))
+//        val savedCourseWithLesson = repository.getSavedCourseWithLessons(course.id)
 
     }
 
@@ -146,7 +144,7 @@ class CourseDetailViewModel @ViewModelInject constructor(
     }
 
     sealed class DetailEvent {
-        data class NavigateToCourseScreen(val courseWithLessons: CourseWithLessons) : DetailEvent()
+        data class NavigateToCourseScreen(val savedCourseId: String) : DetailEvent()
     }
 
     private suspend fun saveCourse(course: Course) {
@@ -164,6 +162,7 @@ class CourseDetailViewModel @ViewModelInject constructor(
                 courseDuration.value!!
             )
 
+            Log.d(TAG,courseDb.toString())
             repository.saveCourseDb(courseDb)
         }
     }

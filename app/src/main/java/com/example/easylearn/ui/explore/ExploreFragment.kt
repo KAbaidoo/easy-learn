@@ -57,6 +57,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                 when (result){
                     is ApiResult.Success -> {
                         progressBar.isVisible = false
+                        textViewError.isVisible = false
                         courseAdapter.submitList(result.data)
                     }
                     is ApiResult.Failure,null -> {

@@ -62,7 +62,6 @@ class Repository @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-
     //    ==============================================================
 //    Database operations
     suspend fun saveLessonDb(lessonDb: LessonDb) =
@@ -73,5 +72,12 @@ class Repository @Inject constructor(
 
     suspend fun getSavedCourseWithLessons(id: String) =
         withContext(Dispatchers.IO) { courseDao.getCourseWithLessons(id) }
+
+    suspend fun getSavedCourses() =
+        withContext(Dispatchers.IO) { courseDao.getAllCourses() }
+
+    suspend fun deleteCourse(courseId: String) = with(Dispatchers.IO) {
+        courseDao.deleteCourse(courseId)
+    }
 
 }
