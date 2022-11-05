@@ -162,7 +162,6 @@ class CourseDetailViewModel @ViewModelInject constructor(
                 courseDuration.value!!
             )
 
-            Log.d(TAG,courseDb.toString())
             repository.saveCourseDb(courseDb)
         }
     }

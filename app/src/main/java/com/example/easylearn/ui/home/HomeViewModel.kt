@@ -24,14 +24,12 @@ class HomeViewModel @ViewModelInject constructor(private val repository: Reposit
         }
 
 
-
-
     private val homeEventChannel = Channel<HomeEvent>()
     val homeEvent = homeEventChannel.receiveAsFlow()
 
 
 
-    private fun loadOngoingCourses() {
+     fun loadOngoingCourses() {
         viewModelScope.launch {
             _ongoingCourses.value = repository.getSavedCourses()
         }
@@ -42,9 +40,9 @@ class HomeViewModel @ViewModelInject constructor(private val repository: Reposit
         homeEventChannel.send(HomeEvent.NavigateToCourseScreen(courseId))
     }
 
-    fun courseClicked(courseId: String)= viewModelScope.launch {
+    fun deleteCourse(courseId: String)= viewModelScope.launch {
         repository.deleteCourse(courseId)
-        loadOngoingCourses()
+       loadOngoingCourses()
     }
 
     sealed class HomeEvent {

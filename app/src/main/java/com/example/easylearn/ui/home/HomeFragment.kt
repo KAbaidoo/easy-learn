@@ -1,14 +1,17 @@
 package com.example.easylearn.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easylearn.R
-import com.example.easylearn.databinding.FragmentExploreBinding
 import com.example.easylearn.databinding.FragmentHomeBinding
-import com.example.easylearn.ui.explore.CourseAdapter
+import com.example.easylearn.ui.explore.ExploreFragmentDirections
+import com.example.easylearn.ui.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,15 +36,34 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnItemClickLi
                     coursesDb ->
                 homeAdapter.submitList(coursesDb)
 
+
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.homeEvent.collect { event ->
+                when (event) {
+                    is HomeViewModel.HomeEvent.NavigateToCourseScreen -> {
+
+                        Log.d(TAG,event.courseId)
+//                        val action =
+//                            ExploreFragmentDirections.actionNavigationExploreToCourseDetailFragment(
+//                                event.course
+//                            )
+//                        findNavController().navigate(action)
+
+                    }
+                }
             }
         }
 
-
-
     }
 
+
     override fun onItemClick(courseId: String) {
-       viewModel.courseClicked(courseId)
+       viewModel.deleteCourse(courseId)
         viewModel.onCourseSelected(courseId)
+    }
+    companion object {
+        private const val TAG = "HomeFragment"
     }
 }
