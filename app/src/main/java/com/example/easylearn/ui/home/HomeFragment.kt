@@ -32,8 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnItemClickLi
                 setHasFixedSize(true)
             }
 
-            viewModel.ongoingCourses.observe(viewLifecycleOwner){
-                    coursesDb ->
+            viewModel.ongoingCourses.observe(viewLifecycleOwner) { coursesDb ->
                 homeAdapter.submitList(coursesDb)
 
 
@@ -44,12 +43,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnItemClickLi
                 when (event) {
                     is HomeViewModel.HomeEvent.NavigateToCourseScreen -> {
 
-                        Log.d(TAG,event.courseId)
-//                        val action =
-//                            ExploreFragmentDirections.actionNavigationExploreToCourseDetailFragment(
-//                                event.course
-//                            )
-//                        findNavController().navigate(action)
+
+                        val action =
+                            HomeFragmentDirections.actionNavigationHomeToCourseFragment(
+                                event.courseId
+                            )
+                        findNavController().navigate(action)
 
                     }
                 }
@@ -60,9 +59,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnItemClickLi
 
 
     override fun onItemClick(courseId: String) {
-       viewModel.deleteCourse(courseId)
+
         viewModel.onCourseSelected(courseId)
     }
+
     companion object {
         private const val TAG = "HomeFragment"
     }

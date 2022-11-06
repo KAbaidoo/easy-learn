@@ -1,6 +1,5 @@
 package com.example.easylearn.ui.detail
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -9,7 +8,6 @@ import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.api.Lesson
 import com.example.easylearn.data.db.entities.CourseDb
 import com.example.easylearn.data.db.entities.LessonDb
-import com.example.easylearn.data.db.entities.relations.CourseWithLessons
 import com.example.easylearn.util.ApiResult
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -47,9 +45,9 @@ class CourseDetailViewModel @ViewModelInject constructor(
         loadLessons()
     }
 
-    private val courseDetailEventChannel = Channel<DetailEvent>()
+    private val _detailEventChannel = Channel<DetailEvent>()
 
-    val courseDetailEvent = courseDetailEventChannel.receiveAsFlow()
+    val detailEvent = _detailEventChannel.receiveAsFlow()
 
     private fun loadLessons() {
         viewModelScope.launch {
@@ -75,7 +73,7 @@ class CourseDetailViewModel @ViewModelInject constructor(
         saveLessons(l)
         joinAll()
 //        send event to channel
-        courseDetailEventChannel.send(DetailEvent.NavigateToCourseScreen(c.id))
+        _detailEventChannel.send(DetailEvent.NavigateToCourseScreen(c.id))
 //        val savedCourseWithLesson = repository.getSavedCourseWithLessons(course.id)
 
     }

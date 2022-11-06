@@ -27,6 +27,9 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
 
+        <action
+            android:id="@+id/action_navigation_home_to_courseFragment"
+            app:destination="@id/courseFragment" />
     </fragment>
     <fragment
         android:id="@+id/course_detail_fragment"
@@ -36,6 +39,18 @@
         <argument
             android:name="course"
             app:argType="com.example.easylearn.data.api.Course" />
+        <action
+            android:id="@+id/action_course_detail_fragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseFragment"
+        android:name="com.example.easylearn.ui.course.CourseFragment"
+        android:label="fragment_course"
+        tools:layout="@layout/fragment_course" >
+        <argument
+            android:name="courseId"
+            app:argType="string" />
     </fragment>
 
 

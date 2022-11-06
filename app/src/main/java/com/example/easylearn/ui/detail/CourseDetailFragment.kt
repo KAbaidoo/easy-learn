@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.easylearn.R
@@ -82,9 +83,12 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.courseDetailEvent.collect{ event ->
+            viewModel.detailEvent.collect{ event ->
                 when(event){
-                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> Log.d(TAG, event.savedCourseId)
+                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> {
+                       val action = CourseDetailFragmentDirections.actionCourseDetailFragmentToCourseFragment(event.savedCourseId)
+                        findNavController().navigate(action)
+                    }
 
                 }
             }
