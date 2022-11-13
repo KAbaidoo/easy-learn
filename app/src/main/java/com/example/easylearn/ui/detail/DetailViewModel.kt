@@ -15,7 +15,7 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 
-class CourseDetailViewModel @ViewModelInject constructor(
+class DetailViewModel @ViewModelInject constructor(
     @Assisted private val state: SavedStateHandle,
     private val repository: Repository
 ) : ViewModel() {

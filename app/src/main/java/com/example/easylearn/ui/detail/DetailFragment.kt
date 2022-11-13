@@ -1,7 +1,6 @@
 package com.example.easylearn.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,14 +12,15 @@ import com.bumptech.glide.Glide
 import com.example.easylearn.R
 import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.api.Lesson
-import com.example.easylearn.databinding.FragmentCourseDetailBinding
+
+import com.example.easylearn.databinding.FragmentDetailBinding
 import com.example.easylearn.util.ApiResult
 import com.example.easylearn.util.onButtonClicked
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
-    private val viewModel: CourseDetailViewModel by viewModels()
+class DetailFragment :Fragment(R.layout.fragment_detail){
+    private val viewModel: DetailViewModel by viewModels()
     lateinit var course: Course
     lateinit var lessons: List<Lesson>
 
@@ -28,7 +28,7 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
         super.onViewCreated(view, savedInstanceState)
 
          val lessonAdapter = LessonAdapter()
-        val binding = FragmentCourseDetailBinding.bind(view)
+        val binding = FragmentDetailBinding.bind(view)
 
         binding.apply {
             Glide.with(view)
@@ -85,8 +85,8 @@ class CourseDetailFragment :Fragment(R.layout.fragment_course_detail){
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.detailEvent.collect{ event ->
                 when(event){
-                    is CourseDetailViewModel.DetailEvent.NavigateToCourseScreen -> {
-                       val action = CourseDetailFragmentDirections.actionCourseDetailFragmentToCourseFragment(event.savedCourseId)
+                    is DetailViewModel.DetailEvent.NavigateToCourseScreen -> {
+                       val action = DetailFragmentDirections.actionCourseDetailFragmentToCourseFragment(event.savedCourseId)
                         findNavController().navigate(action)
                     }
 

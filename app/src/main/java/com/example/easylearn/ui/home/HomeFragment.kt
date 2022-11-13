@@ -42,8 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnItemClickLi
             viewModel.homeEvent.collect { event ->
                 when (event) {
                     is HomeViewModel.HomeEvent.NavigateToCourseScreen -> {
-
-
                         val action =
                             HomeFragmentDirections.actionNavigationHomeToCourseFragment(
                                 event.courseId

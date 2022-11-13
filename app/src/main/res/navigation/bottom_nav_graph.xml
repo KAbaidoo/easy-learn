@@ -33,9 +33,9 @@
     </fragment>
     <fragment
         android:id="@+id/course_detail_fragment"
-        android:name="com.example.easylearn.ui.detail.CourseDetailFragment"
+        android:name="com.example.easylearn.ui.detail.DetailFragment"
         android:label="fragment_course_detail"
-        tools:layout="@layout/fragment_course_detail" >
+        tools:layout="@layout/fragment_detail" >
         <argument
             android:name="course"
             app:argType="com.example.easylearn.data.api.Course" />

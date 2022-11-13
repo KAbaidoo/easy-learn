@@ -31,18 +31,14 @@ class LessonAdapter() :
   inner  class LessonViewHolder(private val binding: ItemLessonDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(lesson: Lesson) {
             binding.apply {
-
                 textViewTitle.text = lesson.title
                 textViewLesson.text = "lesson no. ${lesson.lesson}"
                 textViewDuration.text = "${lesson.duration.div(60000)} mins"
             }
         }
-
     }
-
 
 
     class DiffCallback : DiffUtil.ItemCallback<Lesson>() {

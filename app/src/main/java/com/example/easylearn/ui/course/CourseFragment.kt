@@ -26,8 +26,12 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentCourseBinding.bind(view)
 
+
         binding.apply {
-            courseId.text = "Course Id: ${viewModel.courseId}"
+            viewModel.courseWithLessons.observe(viewLifecycleOwner){
+                courseId.text = "Course Id: ${viewModel.courseWithLessons.value}"
+            }
+
         }
     }
 
