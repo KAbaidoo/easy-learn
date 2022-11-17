@@ -19,7 +19,7 @@ import com.example.easylearn.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnItemClickListener {
+class ExploreFragment : Fragment(R.layout.fragment_explore), ExploreCourseAdapter.OnItemClickListener {
 
     private val viewModel: ExploreViewModel by viewModels()
 
@@ -28,7 +28,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentExploreBinding.bind(view)
-        val courseAdapter = CourseAdapter(this)
+        val exploreCourseAdapter = ExploreCourseAdapter(this)
 
 
         binding.myToolbar.apply {
@@ -46,7 +46,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
 
         binding.apply {
             recyclerView.apply {
-                adapter = courseAdapter
+                adapter = exploreCourseAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
@@ -58,7 +58,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), CourseAdapter.OnIte
                     is ApiResult.Success -> {
                         progressBar.isVisible = false
                         textViewError.isVisible = false
-                        courseAdapter.submitList(result.data)
+                        exploreCourseAdapter.submitList(result.data)
                     }
                     is ApiResult.Failure,null -> {
                         progressBar.isVisible = false

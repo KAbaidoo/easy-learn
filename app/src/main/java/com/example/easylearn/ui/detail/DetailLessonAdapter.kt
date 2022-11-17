@@ -5,23 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.api.Lesson
-import com.example.easylearn.databinding.ItemCourseBinding
 import com.example.easylearn.databinding.ItemLessonDetailBinding
-import com.example.easylearn.ui.explore.CourseAdapter
 
-class LessonAdapter() :
-    ListAdapter<Lesson, LessonAdapter.LessonViewHolder>(DiffCallback()) {
+class DetailLessonAdapter() :
+    ListAdapter<Lesson, DetailLessonAdapter.LessonViewHolder>(DiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonAdapter.LessonViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailLessonAdapter.LessonViewHolder {
         val binding =
             ItemLessonDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LessonViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: LessonAdapter.LessonViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DetailLessonAdapter.LessonViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
             holder.bind(currentItem)

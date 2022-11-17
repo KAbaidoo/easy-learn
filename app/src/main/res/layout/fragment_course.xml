@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9EBEC"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.course.CourseFragment">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="course"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:layout_centerInParent="true"/>
-    <TextView
-        android:layout_below="@+id/title"
-        android:id="@+id/courseId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="course id:"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_centerInParent="true"/>
+    <ImageView
+        android:id="@+id/image_view_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/covid_19" />
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lessonDb_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/image_view_banner"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        tools:listitem="@layout/item_lesson_detail" />
 </RelativeLayout>

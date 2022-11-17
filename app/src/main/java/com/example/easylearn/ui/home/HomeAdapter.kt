@@ -2,16 +2,12 @@ package com.example.easylearn.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.db.entities.CourseDb
-import com.example.easylearn.databinding.ItemCourseBinding
 import com.example.easylearn.databinding.ItemOngoingCourseBinding
-import com.example.easylearn.ui.explore.CourseAdapter
 
 class HomeAdapter(private val listener: OnItemClickListener) :
     ListAdapter<CourseDb, HomeAdapter.HomeViewHolder>(DiffCallback()) {

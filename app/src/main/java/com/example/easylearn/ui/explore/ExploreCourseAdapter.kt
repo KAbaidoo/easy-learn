@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.easylearn.data.api.Course
 import com.example.easylearn.databinding.ItemCourseBinding
 
-class CourseAdapter(private val listener: OnItemClickListener) :
-    ListAdapter<Course, CourseAdapter.CourseViewHolder>(DiffCallback()) {
+class ExploreCourseAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Course, ExploreCourseAdapter.CourseViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val binding =

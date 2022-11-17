@@ -27,7 +27,7 @@ class DetailFragment :Fragment(R.layout.fragment_detail){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         val lessonAdapter = LessonAdapter()
+         val detailLessonAdapter = DetailLessonAdapter()
         val binding = FragmentDetailBinding.bind(view)
 
         binding.apply {
@@ -48,7 +48,7 @@ class DetailFragment :Fragment(R.layout.fragment_detail){
                 textViewLessons.text= "${it} lessons  •  "
             }
             lessonsRecyclerView.apply {
-                adapter = lessonAdapter
+                adapter = detailLessonAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(false)
             }
@@ -56,7 +56,7 @@ class DetailFragment :Fragment(R.layout.fragment_detail){
                 when (result){
                     is ApiResult.Success -> {
                         progressBar.isVisible = false
-                        lessonAdapter.submitList(result.data)
+                        detailLessonAdapter.submitList(result.data)
                         lessons = result.data!!
                         course = viewModel.course!!
 
