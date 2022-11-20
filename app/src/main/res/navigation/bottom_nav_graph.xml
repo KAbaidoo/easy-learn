@@ -29,7 +29,7 @@
 
         <action
             android:id="@+id/action_navigation_home_to_courseFragment"
-            app:destination="@id/courseFragment" />
+            app:destination="@id/courseActivity" />
     </fragment>
     <fragment
         android:id="@+id/course_detail_fragment"
@@ -41,17 +41,17 @@
             app:argType="com.example.easylearn.data.api.Course" />
         <action
             android:id="@+id/action_course_detail_fragment_to_courseFragment"
-            app:destination="@id/courseFragment" />
+            app:destination="@id/courseActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/courseFragment"
-        android:name="com.example.easylearn.ui.course.CourseFragment"
+    <activity
+        android:id="@+id/courseActivity"
+        android:name="com.example.easylearn.ui.course.CourseActivity"
         android:label="fragment_course"
-        tools:layout="@layout/fragment_course" >
+        tools:layout="@layout/activity_course" >
         <argument
             android:name="courseId"
             app:argType="string" />
-    </fragment>
+    </activity>
 
 
 </navigation>

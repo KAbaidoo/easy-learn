@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.course.CourseFragment">
+    tools:context=".ui.course.CourseActivity">
 
-    <ImageView
-        android:id="@+id/image_view_banner"
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/covid_19" />
+        android:layout_height="200dp" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lessonDb_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/image_view_banner"
+        android:layout_below="@+id/player_view"
         android:clipToPadding="false"
         android:padding="4dp"
         tools:listitem="@layout/item_lesson_detail" />
