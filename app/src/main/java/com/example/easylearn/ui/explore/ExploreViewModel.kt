@@ -29,7 +29,6 @@ class ExploreViewModel @ViewModelInject constructor(
     val courseApiResponse = courseFlow.asLiveData()
 
 
-
     fun onCourseSelected(course: Course) = viewModelScope.launch {
         exploreEventChannel.send(CourseEvent.NavigateToCourseDetailScreen(course))
     }

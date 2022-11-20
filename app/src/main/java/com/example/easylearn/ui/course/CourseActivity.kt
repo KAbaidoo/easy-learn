@@ -127,9 +127,9 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
         TODO("Not yet implemented")
     }
 
-//    companion object {
-//        private const val TAG = "CourseFragment"
-//    }
+    companion object {
+        private const val TAG = "CourseFragment"
+    }
 
 
 }
