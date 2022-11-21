@@ -25,4 +25,7 @@ interface CourseDao {
     @Query("DELETE FROM course_table WHERE id = :courseId")
     suspend fun deleteCourse(courseId: String)
 
+    @Update
+    suspend fun setLessonCompleted(lessonDbs: List<LessonDb>)
+
 }

@@ -2,12 +2,15 @@ package com.example.easylearn.ui.course
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+
+
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
@@ -26,9 +29,9 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
-    val videoUrl =
-        "https://firebasestorage.googleapis.com/v0/b/bucketlist-10f69.appspot.com/o/video%2FPlaceholder_Video_oznr-1-poSU_135.mp4?alt=media&token=a5019ced-a5da-4223-8945-5d2d016914f0"
-    lateinit var binding: ActivityCourseBinding
+
+    private lateinit var binding: ActivityCourseBinding
+    private var playlist: List<LessonDb>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,43 +40,49 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
         setContentView(binding.root)
 
         val courseLessonAdapter = CourseLessonAdapter(this)
-        initializePlayer()
+
+
+
 
 
         binding.apply {
             //            Play media
-
-
             lessonDbRecyclerView.apply {
                 adapter = courseLessonAdapter
-                layoutManager = LinearLayoutManager(this@CourseActivity)
+                layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
             }
 
             viewModel.courseWithLessons.observe(this@CourseActivity) {
                 courseLessonAdapter.submitList(it.lessons)
+                playlist = it.lessons
+                playlist?.let {
+                    initializePlayer()
+                }
             }
-
 
         }
     }
 
     private fun initializePlayer() {
 
-
         player = ExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
                 binding.playerView.player = exoPlayer
-                val mediaItem = MediaItem.fromUri(videoUrl)
-                exoPlayer.setMediaItem(mediaItem)
-
+                playlist?.forEach {
+                    val mediaItem = MediaItem.fromUri(it.src)
+                    exoPlayer.addMediaItem(mediaItem)
+                }
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentItem, playbackPosition)
                 exoPlayer.prepare()
+
             }
 
     }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -84,7 +93,7 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
 
     override fun onResume() {
         super.onResume()
-        hideSystemUi()
+//        hideSystemUi()
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer()
         }
@@ -94,6 +103,7 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
         super.onPause()
         if (Util.SDK_INT <= 23) {
             releasePlayer()
+            Log.d(TAG,"$currentItem")
         }
     }
 
@@ -104,12 +114,14 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
             releasePlayer()
         }
     }
+
     @SuppressLint("InlinedApi")
     private fun hideSystemUi() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, binding.playerView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
@@ -128,7 +140,7 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
     }
 
     companion object {
-        private const val TAG = "CourseFragment"
+        private const val TAG = "CourseActivity"
     }
 
 

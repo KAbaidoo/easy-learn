@@ -76,8 +76,12 @@ class Repository @Inject constructor(
     suspend fun getSavedCourses() =
         withContext(Dispatchers.IO) { courseDao.getAllCourses() }
 
-    suspend fun deleteCourse(courseId: String) = with(Dispatchers.IO) {
+    suspend fun deleteCourse(courseId: String) = withContext(Dispatchers.IO) {
         courseDao.deleteCourse(courseId)
+    }
+
+   suspend fun setLessonCompleted(lessonDbs: List<LessonDb>) = withContext(Dispatchers.IO){
+       courseDao.setLessonCompleted(lessonDbs)
     }
 
 }

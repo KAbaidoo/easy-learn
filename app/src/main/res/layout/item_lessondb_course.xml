@@ -48,6 +48,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             tools:text="30min" />
+
         <TextView
             android:id="@+id/text_view_complete"
             android:layout_width="wrap_content"

@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.example.easylearn.data.Repository
 import com.example.easylearn.data.api.Course
 import com.example.easylearn.data.db.entities.CourseDb
+import com.example.easylearn.data.db.entities.LessonDb
 import com.example.easylearn.data.db.entities.relations.CourseWithLessons
 import com.example.easylearn.ui.explore.ExploreViewModel
 import com.example.easylearn.ui.home.HomeViewModel
@@ -35,6 +36,26 @@ class CourseViewModel @ViewModelInject constructor(
             _courseWithLessons.value = repository.getSavedCourseWithLessons(id)
         }
     }
+
+    fun setCompleted(lessonDbs: List<LessonDb>) {
+        viewModelScope.launch {
+            repository.setLessonCompleted(lessonDbs)
+        }
+    }
+//    private fun setCompleted() {
+//        playlist?.let { it ->
+//            val payload =  mutableListOf<LessonDb>()
+//            for (i in 0..currentItem) {
+//
+//                val lessonDb =  it[i].copy( isComplete = true)
+//
+//                payload.add(lessonDb)
+//
+//            }
+//            viewModel.setCompleted(payload)
+//        }
+//
+//    }
 
     private val _courseEventChannel = Channel<HomeViewModel.HomeEvent>()
     val courseEvent = _courseEventChannel.receiveAsFlow()
