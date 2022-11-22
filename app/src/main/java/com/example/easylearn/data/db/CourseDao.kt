@@ -16,6 +16,9 @@ interface CourseDao {
     @Query("SELECT * FROM course_table WHERE id = :courseId")
     suspend fun getCourseWithLessons(courseId : String): CourseWithLessons
 
+    @Query("SELECT * FROM lesson_table WHERE courseId = :courseId")
+    suspend fun getCourseLessons(courseId : String): List<LessonDb>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCourse(courseDb: CourseDb)
 
@@ -26,6 +29,7 @@ interface CourseDao {
     suspend fun deleteCourse(courseId: String)
 
     @Update
-    suspend fun setLessonCompleted(lessonDbs: List<LessonDb>)
+    suspend fun updateLessons(lessonDbs: List<LessonDb>)
+
 
 }

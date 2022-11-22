@@ -1,14 +1,12 @@
 package com.example.easylearn.ui.course
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.easylearn.data.Repository
-import com.example.easylearn.data.api.Course
-import com.example.easylearn.data.db.entities.CourseDb
 import com.example.easylearn.data.db.entities.LessonDb
 import com.example.easylearn.data.db.entities.relations.CourseWithLessons
-import com.example.easylearn.ui.explore.ExploreViewModel
 import com.example.easylearn.ui.home.HomeViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -20,48 +18,49 @@ class CourseViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val courseId = state.get<String>("courseId")
-    private val _courseWithLessons = MutableLiveData<CourseWithLessons>()
+    private val _courseLessons = MutableLiveData<List<LessonDb>>()
 
-    val courseWithLessons: LiveData<CourseWithLessons>
+    val courseLessons: LiveData<List<LessonDb>>
         get() {
             courseId?.let {
-                loadCourseWithLessons(courseId)
+                loadCourseLessons(courseId)
             }
-            return _courseWithLessons
+            return _courseLessons
         }
 
+    val currentIndex =  MutableLiveData<Int>()
 
-    fun loadCourseWithLessons(id: String) {
+    fun loadCourseLessons(id: String) {
         viewModelScope.launch {
-            _courseWithLessons.value = repository.getSavedCourseWithLessons(id)
+            _courseLessons.value = repository.getSavedLessons(id)
+
         }
     }
 
-    fun setCompleted(lessonDbs: List<LessonDb>) {
+    fun setCompleted() {
         viewModelScope.launch {
-            repository.setLessonCompleted(lessonDbs)
+            _courseLessons.value?.let { it ->
+                val payload =  mutableListOf<LessonDb>()
+                for (i in 0..currentIndex.value!!) {
+                    val lessonDb =  it[i].copy( isComplete = true)
+                    payload.add(lessonDb)
+                }
+                repository.updateCompletedLessons(payload)
+                Log.d(TAG,"${currentIndex.value}")
         }
     }
-//    private fun setCompleted() {
-//        playlist?.let { it ->
-//            val payload =  mutableListOf<LessonDb>()
-//            for (i in 0..currentItem) {
-//
-//                val lessonDb =  it[i].copy( isComplete = true)
-//
-//                payload.add(lessonDb)
-//
-//            }
-//            viewModel.setCompleted(payload)
-//        }
-//
-//    }
+
+
+    }
 
     private val _courseEventChannel = Channel<HomeViewModel.HomeEvent>()
     val courseEvent = _courseEventChannel.receiveAsFlow()
 
     sealed class CourseEvent {
         data class SomeCourseEvent(val courseId: String) : CourseViewModel.CourseEvent()
+    }
+    companion object {
+        private const val TAG = "CourseViewModel"
     }
 }
 

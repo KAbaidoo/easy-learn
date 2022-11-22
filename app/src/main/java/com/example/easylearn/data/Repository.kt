@@ -73,6 +73,9 @@ class Repository @Inject constructor(
     suspend fun getSavedCourseWithLessons(id: String) =
         withContext(Dispatchers.IO) { courseDao.getCourseWithLessons(id) }
 
+    suspend fun getSavedLessons(id: String) =
+        withContext(Dispatchers.IO) { courseDao.getCourseLessons(id) }
+
     suspend fun getSavedCourses() =
         withContext(Dispatchers.IO) { courseDao.getAllCourses() }
 
@@ -80,8 +83,9 @@ class Repository @Inject constructor(
         courseDao.deleteCourse(courseId)
     }
 
-   suspend fun setLessonCompleted(lessonDbs: List<LessonDb>) = withContext(Dispatchers.IO){
-       courseDao.setLessonCompleted(lessonDbs)
+
+    suspend fun updateCompletedLessons(payload: List<LessonDb>) = withContext(Dispatchers.IO){
+        courseDao.updateLessons(payload)
     }
 
 }

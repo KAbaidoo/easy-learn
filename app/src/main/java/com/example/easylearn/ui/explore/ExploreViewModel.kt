@@ -23,6 +23,7 @@ class ExploreViewModel @ViewModelInject constructor(
     val courseEvent = exploreEventChannel.receiveAsFlow()
 
     val searchQuery = state.getLiveData("searchQuery", "")
+
     val courseFlow = searchQuery.asFlow().flatMapLatest {
         repository.searchCourses(it)
     }

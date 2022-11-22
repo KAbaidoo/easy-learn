@@ -1,28 +1,30 @@
 package com.example.easylearn.ui.course
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 
 
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.easylearn.R
 import com.example.easylearn.data.db.entities.LessonDb
-import com.example.easylearn.databinding.ActivityCourseBinding
 
+import com.example.easylearn.databinding.FragmentCourseBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListener {
+class CourseFragment : Fragment(R.layout.fragment_course), CourseLessonAdapter.OnItemClickListener,
+    Player.Listener {
+
 
     private val viewModel: CourseViewModel by viewModels()
     private var player: ExoPlayer? = null
@@ -30,15 +32,14 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
     private var currentItem = 0
     private var playbackPosition = 0L
 
-    private lateinit var binding: ActivityCourseBinding
+    private lateinit var binding: FragmentCourseBinding
     private var playlist: List<LessonDb>? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCourseBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding = FragmentCourseBinding.bind(view)
         val courseLessonAdapter = CourseLessonAdapter(this)
 
 
@@ -49,24 +50,36 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
             //            Play media
             lessonDbRecyclerView.apply {
                 adapter = courseLessonAdapter
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
 
-            viewModel.courseWithLessons.observe(this@CourseActivity) {
-                courseLessonAdapter.submitList(it.lessons)
-                playlist = it.lessons
+            viewModel.courseLessons.observe(viewLifecycleOwner) {
+                courseLessonAdapter.submitList(it)
+                playlist = it
                 playlist?.let {
                     initializePlayer()
                 }
-            }
+                player?.addListener(this@CourseFragment)
 
+
+            }
         }
+
+    }
+
+
+
+
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        super.onMediaItemTransition(mediaItem, reason)
+        viewModel.currentIndex.value = player?.currentMediaItemIndex
+        viewModel.setCompleted()
     }
 
     private fun initializePlayer() {
 
-        player = ExoPlayer.Builder(this)
+        player = ExoPlayer.Builder(requireContext())
             .build()
             .also { exoPlayer ->
                 binding.playerView.player = exoPlayer
@@ -80,8 +93,8 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
 
             }
 
-    }
 
+    }
 
 
     override fun onStart() {
@@ -99,36 +112,39 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
         }
     }
 
-    public override fun onPause() {
+    override fun onPause() {
         super.onPause()
         if (Util.SDK_INT <= 23) {
             releasePlayer()
-            Log.d(TAG,"$currentItem")
+
         }
+
     }
 
 
-    public override fun onStop() {
+    override fun onStop() {
         super.onStop()
         if (Util.SDK_INT > 23) {
             releasePlayer()
         }
+
     }
 
-    @SuppressLint("InlinedApi")
-    private fun hideSystemUi() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.playerView).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
+//    @SuppressLint("InlinedApi")
+//    private fun hideSystemUi() {
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        WindowInsetsControllerCompat(window, binding.playerView).let { controller ->
+//            controller.hide(WindowInsetsCompat.Type.systemBars())
+//            controller.systemBarsBehavior =
+//                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+//        }
+//    }
 
     private fun releasePlayer() {
         player?.let { exoPlayer ->
             playbackPosition = exoPlayer.currentPosition
             currentItem = exoPlayer.currentMediaItemIndex
+
             playWhenReady = exoPlayer.playWhenReady
             exoPlayer.release()
         }
@@ -140,9 +156,8 @@ class CourseActivity : AppCompatActivity(), CourseLessonAdapter.OnItemClickListe
     }
 
     companion object {
-        private const val TAG = "CourseActivity"
+        private const val TAG = "CourseFragment"
     }
-
 
 }
 

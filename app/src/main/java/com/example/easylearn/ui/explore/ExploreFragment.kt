@@ -52,7 +52,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore), ExploreCourseAdapte
             }
 
             viewModel.courseApiResponse.observe(viewLifecycleOwner) { result ->
-//                courseAdapter.submitList(result.data)
+
 
                 when (result){
                     is ApiResult.Success -> {

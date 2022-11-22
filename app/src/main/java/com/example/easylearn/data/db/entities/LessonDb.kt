@@ -13,5 +13,5 @@ data class LessonDb(
     val lesson: Int,
     val src: String,
     val title: String,
-    var isComplete:Boolean = false
+    val isComplete:Boolean = false
 ): Parcelable
